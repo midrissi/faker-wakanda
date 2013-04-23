@@ -1,0 +1,32 @@
+{
+    "extension": 
+    {
+        "name": "Random Data Generator",
+        "version": "0.1",
+        "description": "A random data generator",
+        "icon": "icon.png",
+        "senders": [
+            {
+                "location": "studioToolbar", 
+                "actionName": "faker",
+                "title": "Faker"
+            }
+        ],
+        "actions": [
+            {
+                "name": "faker",
+                "title": "Faker"
+            },
+            {
+                "name": "refresh",
+                "title": "Refresh",
+                "trigger": [
+                    {"event": "onSolutionOpened"},
+                    {"event": "onSolutionClosed"},
+                    {"event": "onStudioStart"}
+                ]
+            }
+        ],
+        "lifetime": "action_lifetime"
+    }
+}

@@ -1,0 +1,139 @@
+/**
+ * Copyright (c) 2012 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file.
+ */
+
+body{
+	width: 470px;
+}
+
+#options .select-subType{
+	width: 140px;
+}
+#content{
+	margin-top: 65px;
+}
+
+div.attributes{
+    position: absolute;
+    top: 65px;
+    bottom: 40px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    right: 0px;
+    left: 21px;
+}
+div.footer{
+    position:absolute;
+    bottom: 5px;
+    right: 5px;
+    left: 5px;
+}
+div.footer #length,
+div.footer #generate{
+    float: right;
+}
+
+div.footer button{
+    margin-top: 4px;
+}
+ul#navigation {
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    top: 0px;
+    list-style: none;
+    width:439px;
+}
+ul#navigation li {
+    width: 87px;
+    display:inline;
+    float:left;
+    margin-top:-60px; 
+    transition: margin-top 0.8s;
+}
+ul#navigation li:hover {
+    margin-top:-20px;
+    transition: margin-top 0.8s;
+    
+     cursor:pointer;
+}
+ul#navigation li a {
+    display: block;
+    float:left;
+    margin-top: -2px;
+    width: 87px;
+    height: 25px;
+    background-color:#E7F2F9;
+    background-repeat:no-repeat;
+    border:1px solid #BDDCEF;
+    -moz-border-radius:0px 0px 10px 10px;
+    -webkit-border-radius: 4px;
+    text-decoration:none;
+    text-align:center;
+    padding-top:60px;
+    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=70); 
+}
+ul#navigation li a:hover{
+     background-color:#CAE3F2;
+}
+ul#navigation li a span{
+	letter-spacing: 1px;
+	font-size: 13px;
+	color: rgb(26, 81, 112);
+	text-shadow: 0 -1px 1px #fff;      
+}
+li.menu-item a{
+	background-size: 40%;
+	background-position: 50% 46%;
+}
+li.menu-item.add a{
+    background-image: url(images/add.png);
+}
+li.menu-item.save a      {
+    background-image: url(images/save.png);
+}
+li.menu-item.load a      {
+    background-image: url(images/load.png);
+}
+li.menu-item.init a      {
+    background-image: url(images/init.png);
+}
+li.menu-item.navigator a   {
+    background-image: url(images/navigator.png);
+}
+li.menu-item.photos a     {
+    background-image: url(images/camera.png);
+}
+li.menu-item.contact a    {
+    background-image: url(images/mail.png);
+}
+
+textarea, select, input[type="text"], input[type="number"] {
+	background-color: #ffffff;
+	color: #555555;
+	border: 1px solid rgb(177, 177, 177);
+	padding: 3px;
+	border-radius: 3px;
+}
+
+.removeBtn{
+	background-image: url(images/remove.png);
+	width: 24px;
+	background-size: 88%;
+	height: 24px;
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+	background-position: 50%;
+	background-repeat: no-repeat;
+}
+
+textarea:focus, select:focus, input[type="text"]:focus, input[type="number"]:focus {
+	border-color: rgba(82, 168, 236, 0.8);
+	outline: 0;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+}
