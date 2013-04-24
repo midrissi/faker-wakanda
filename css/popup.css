@@ -41,17 +41,17 @@ div.footer{
     right: 34px;
     left: 27px;
 }
-div.footer #runFile,
+div.footer #removeDC,
 div.footer #folderName,
-div.footer label[for=runFile],
+div.footer label[for=removeDC],
 div.footer label[for=folderName],
 div.footer #generate{
     float: right;
 }
-div.footer #runFile{
+div.footer #removeDC{
     margin-top: 6px;
 }
-div.footer label[for=runFile]{
+div.footer label[for=removeDC]{
     margin-top: 3px;
 }
 div.footer select{

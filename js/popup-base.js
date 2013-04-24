@@ -110,7 +110,7 @@ define(['configurator'] , function(configurator){
 			var res = JSON.stringify(inst.generateFakeData() , null , '\t');
 			
 
-			Template('run', {folder : $('#folderName').val() , file : 'data.json' , dataClass: $('#dataclasses').val()}, function(js) {
+			Template('run', {remove : $('#removeDC').prop('checked') , folder : $('#folderName').val() , file : 'data.json' , dataClass: $('#dataclasses').val()}, function(js) {
 				wak.saveText($('#projects').val() , 'data.json' , res);
 				wak.saveText($('#projects').val() , 'fill.js' , js , true);
 				studio.extension.quitDialog();

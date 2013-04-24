@@ -118,8 +118,18 @@ define(['jquery' , 'underscore' , 'template'] , function(){
 			ts.close();
 
 			if(open && f.exists){
-				debugger;
-				studio.openFile(f.getURL());
+				var path = f.path;
+				
+				if(navigator.platform.toLowerCase().indexOf('mac') >= 0){
+					path = path.substring(1).replace(/\//g , ':');
+				}
+				else{
+					path = path.replace(/\//g , '\\');
+				}
+				
+				if(studio.openFile(path)){
+					studio.sendCommad('runEditorFile');
+				}
 			}
 		}
 	}

@@ -20,8 +20,8 @@
 <div class="footer">
   <button id='cancel'>Cancel</button>
   <button id='generate'>Generate</button>
-  <input type='checkbox' id='runFile' checked/>
-  <label for='runFile'>Run file after generation</label>
+  <input type='checkbox' id='removeDC' checked/>
+  <label for='removeDC'>Clear dataStore content</label>
   <input type='text' id='folderName' style="width: 59px;margin-right: 10px;margin-left: 6px;" value='_tmp' />
   <label for='folderName' style="margin-top:3px;">Folder</label>
 </div>

@@ -1,7 +1,7 @@
 {
     "extension": 
     {
-        "name": "Random Data Generator",
+        "name": "randomizer",
         "version": "0.1",
         "description": "A random data generator",
         "icon": "icon.png",

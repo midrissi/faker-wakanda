@@ -194,11 +194,17 @@ define(['ext_faker' , 'jquery', 'wakanda' , 'underscore' , 'template'] , functio
 		});
 
 		Template('options', {attributes : attrs}, function(html) {
+			var conf = studio.extension.getPref('_meta') ? JSON.parse(studio.extension.getPref('_meta')) : {};
+			
 			$('#projects')
 			.html(html)
-			.trigger('change');
+			.trigger('change')
+			.val(conf.project);
 
-			if(opts.onSuccess){
+			$('#dataclasses')
+			.val(conf.dc);
+
+			if(opts && opts.onSuccess){
 				opts.onSuccess.call(that);
 			}
 	    });
@@ -267,6 +273,10 @@ define(['ext_faker' , 'jquery', 'wakanda' , 'underscore' , 'template'] , functio
 
 	Configurator.prototype.saveConfig = function(){
 		studio.extension.setPref("config" , JSON.stringify(this.getConfig()));
+		studio.extension.setPref("_meta" , JSON.stringify({
+			project : $('#projects').val(),
+			dc : $('#dataclasses').val()
+		}));
 	}
 
 	Configurator.prototype.initConfig = function(){
