@@ -30,8 +30,10 @@ require.config({
 	]
 });
 
-define(['configurator' , 'wakanda'] , function(configurator , wak){
+define(['configurator'] , function(configurator){
 	var inst = configurator.getInstance();
+	var wak  = inst.getWak();
+
 	window.inst = inst;
 
 	// Init events
@@ -134,6 +136,13 @@ define(['configurator' , 'wakanda'] , function(configurator , wak){
 	.live({
 		change : function(){
 			inst.updateDataClasses();
+		}
+	});
+
+	$('#dataclasses')
+	.live({
+		change : function(){
+			inst.reloadAttributes();
 		}
 	});
 

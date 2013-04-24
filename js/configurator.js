@@ -73,16 +73,58 @@ define(['ext_faker' , 'jquery', 'wakanda' , 'underscore' , 'template'] , functio
 	}
 
 	Configurator.prototype._init 	= function() {
-
 		this.faker 			= faker._meta.apisToExpose;
 		this.definitions 	= faker._meta.definitionsToExpose;
+		this.dcConfig		= {
+			projectPath	: null,
+			dc 			: null,
+			attributes 	: []
+		}
 		
 		this.initTags();
 
 		this.loadView('home' , function(){
-			this.loadConfig();
-			this.loadProjects();
+			this.loadProjects({
+				onSuccess: function(){
+					this.loadConfig();
+				}
+			});
 		});
+	};
+
+	Configurator.prototype.getWak = function() {
+		return wak;
+	};
+
+	Configurator.prototype.getAttributes = function() {
+		var conf = this.dcConfig;
+		if(conf.projectPath != $('#projects').val() || conf.dc != $('#dataclasses').val()){
+			conf.attributes 	= wak.getAttributes();
+			conf.projectPath 	= $('#projects').val();
+			conf.dc 			= $('#dataclasses').val();
+		}
+
+		return conf.attributes;
+	};
+
+	Configurator.prototype.reloadAttributes = function() {
+		var conf  = this.dcConfig;
+		if(conf.projectPath != $('#projects').val() || conf.dc != $('#dataclasses').val()){
+			var attrs = this.getAttributes(),
+				opts  = [];
+
+			for(var i = 0 , attr ; attr = attrs[i] ; i++){
+				opts.push({
+					label : attr,
+					value : attr
+				});
+			}
+
+			Template('options', {attributes : opts}, function(html) {
+				$('#options select.input-name')
+				.html(html);
+		    });
+		}
 	};
 
 	Configurator.prototype.addRow = function(options){
@@ -90,17 +132,11 @@ define(['ext_faker' , 'jquery', 'wakanda' , 'underscore' , 'template'] , functio
 			subTypes	= types[0].attributes,
 			rows 		= $('#options tbody tr');
 
-		Template('parameters', {attributes: [
-				'attr1',
-				'attr2',
-				'attr3',
-			] , types : types , subTypes : subTypes , attrName : 'attr' + rows.length}, function(html) {
+		Template('parameters', {attributes: this.getAttributes() , types : types , subTypes : subTypes , attrName : 'attr' + rows.length}, function(html) {
 			var $row = $(html);
 
 			$row
-			.appendTo($('#options tbody'))
-			.find('input[type=text]')
-			.focus();
+			.appendTo($('#options tbody'));
 
 			if(options && typeof options.onSuccess == 'function'){
 				options.onSuccess( options.data , $row);
@@ -145,7 +181,7 @@ define(['ext_faker' , 'jquery', 'wakanda' , 'underscore' , 'template'] , functio
 		row.refreshSubTypes();
 	}
 
-	Configurator.prototype.loadProjects = function(){
+	Configurator.prototype.loadProjects = function(opts){
 		var attrs = [],
 			that  = this,
 			projs = wak.getProjects();
@@ -161,6 +197,10 @@ define(['ext_faker' , 'jquery', 'wakanda' , 'underscore' , 'template'] , functio
 			$('#projects')
 			.html(html)
 			.trigger('change');
+
+			if(opts.onSuccess){
+				opts.onSuccess.call(that);
+			}
 	    });
 	}
 

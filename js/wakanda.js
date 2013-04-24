@@ -68,8 +68,37 @@ define(['jquery' , 'underscore' , 'template'] , function(){
 			var proj = this.getProject(projectPath);
 			return proj ? proj.dataClasses : null;
 		},
-		getAttributes: function(projectPath , dataClass){
-			var dcs = this.getDataClasses(projectPath);
+		getAttributes: function(){
+			var projPath 	= $('#projects').val(),
+				dcs 		= this.getDataClasses(projPath),
+				dc 			= $('#dataclasses').val(),
+				dcObj		= null,
+				res 		= [];
+
+			if(!projPath || !dcs || !dc){
+				return res;
+			}
+
+			for(var i = 0 , item; item = dcs[i] ; i++){
+				if(dc == item.className){
+					dcObj = item;
+					break;
+				}
+			}
+
+			if(dcObj){
+				for(var i = 0 , attr ; attr = dcObj.attributes[i] ; i++){
+					switch(true){
+						case attr.kind != "relatedEntity" && attr.kind != "relatedEntities":
+							res.push(attr.name);
+							break;
+						default:
+							break;
+					}
+				}
+			}
+
+			return res;
 		},
 		saveText: function( project , fname , content , open){
 			var f,
@@ -82,15 +111,14 @@ define(['jquery' , 'underscore' , 'template'] , function(){
 			}
 
 			f 	= studio.File(tmpFol , fname);
-			ts 	= studio.TextStream(f , 'write');
+			ts 	= studio.TextStream(f , 'Overwrite');
 
-			ts.rewind();
 			ts.write(content);
 			ts.flush();
 			ts.close();
 
 			if(open && f.exists){
-				studio.openFile(f.path);
+				//studio.openFile(f.getURL());
 			}
 		}
 	}
