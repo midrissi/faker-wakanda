@@ -37,7 +37,7 @@ actions.faker = function faker() {
 	studio.extension.showModalDialog(
 		"popup.html" ,
 		null ,
-		{title:"Random Data Generator", dialogwidth:480, dialogheight:370, resizable:true}
+		{title:"Random Data Generator", dialogwidth:500, dialogheight:370, resizable:true}
 	);
 	
 	return true;
