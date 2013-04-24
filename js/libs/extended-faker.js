@@ -190,6 +190,36 @@ define(['faker'] , function(faker){
 				]
 			},
 			{
+				'value' 	: 'Numbers',
+				'label'		: 'Numbers',
+				'attributes': [
+					{
+						'value' : 'tiny',
+						'label'	: 'Tiny ( < 10^3)'
+					},
+					{
+						'value' : 'small',
+						'label'	: 'Small (10^3-10^6)'
+					},
+					{
+						'value' : 'medium',
+						'label'	: 'Medium (10^6-10^9)'
+					},
+					{
+						'value' : 'big',
+						'label'	: 'Big (10^9-10^12)'
+					},
+					{
+						'value' : 'bigger',
+						'label'	: 'Bigger (10^12-10^15)'
+					},
+					{
+						'value' : 'huge',
+						'label'	: 'Huge (10^15-10^18)'
+					}
+				]
+			},
+			{
 				'value' 	: 'Date',
 				'label'		: 'Date',
 				'attributes': [
@@ -314,6 +344,31 @@ define(['faker'] , function(faker){
 		return this.birthDate(60 , 100);
 	}
 
+	faker.Numbers = {};
+	faker.Numbers.tiny = function(){
+		return faker.random.numberPowRange(0,3);
+	}
+
+	faker.Numbers.small = function(){
+		return faker.random.numberPowRange(3,6);
+	}
+
+	faker.Numbers.medium = function(){
+		return faker.random.numberPowRange(6,9);
+	}
+
+	faker.Numbers.big = function(){
+		return faker.random.numberPowRange(9,12);
+	}
+
+	faker.Numbers.bigger = function(){
+		return faker.random.numberPowRange(12,15);
+	}
+
+	faker.Numbers.huge = function(){
+		return faker.random.numberPowRange(15,18);
+	}
+
 	faker.PhoneNumber.phoneNumber = function () {
 		return faker.Helpers.replaceSymbolWithNumber(faker.definitions.phone_formats[1]);
     };
@@ -417,6 +472,20 @@ define(['faker'] , function(faker){
 
 	faker.random.company = function(){
 		return this.array_element(faker.definitions.companies);
+	}
+
+	faker.random.numberPowRange = function(a , b){
+		var res = '',
+			l 	= Math.floor(Math.random()*(b-a+1)) + a,
+			arr = [0,1,2,3,4,5,6,7,8,9];
+		
+		res += this.array_element(arr.slice(1));
+
+		while(res.length < l){
+			res += this.array_element(arr);
+		}
+
+		return parseInt(res);
 	}
 
 	faker.Address.geocode = function(){

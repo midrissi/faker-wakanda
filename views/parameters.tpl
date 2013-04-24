@@ -1,7 +1,7 @@
 <tr>
 	<td><button class="removeBtn"></button></td>
 	<td>
-		<select type="text" value="{{attrName}}" class="input-name" style="width:100px;">
+		<select type="text" value="{{attrName}}" class="input-name" style="width:130px;">
 			{{#each attributes}}
 				<option value="{{this}}">{{this}}</option>
 			{{/each}}

@@ -118,7 +118,8 @@ define(['jquery' , 'underscore' , 'template'] , function(){
 			ts.close();
 
 			if(open && f.exists){
-				//studio.openFile(f.getURL());
+				debugger;
+				studio.openFile(f.getURL());
 			}
 		}
 	}
