@@ -1,4 +1,4 @@
-define(['ext_faker' , 'jquery', 'underscore', 'template'] , function(faker , $ , _){
+define(['ext_faker' , 'jquery', 'wakanda' , 'underscore' , 'template'] , function(faker , $ , wak ){
 	function Row(row){
 		this.config = Configurator.getInstance();
 		
@@ -81,6 +81,7 @@ define(['ext_faker' , 'jquery', 'underscore', 'template'] , function(faker , $ ,
 
 		this.loadView('home' , function(){
 			this.loadConfig();
+			this.loadProjects();
 		});
 	};
 
@@ -89,7 +90,11 @@ define(['ext_faker' , 'jquery', 'underscore', 'template'] , function(faker , $ ,
 			subTypes	= types[0].attributes,
 			rows 		= $('#options tbody tr');
 
-		Template('parameters', {types : types , subTypes : subTypes , attrName : 'attr' + rows.length}, function(html) {
+		Template('parameters', {attributes: [
+				'attr1',
+				'attr2',
+				'attr3',
+			] , types : types , subTypes : subTypes , attrName : 'attr' + rows.length}, function(html) {
 			var $row = $(html);
 
 			$row
@@ -138,6 +143,42 @@ define(['ext_faker' , 'jquery', 'underscore', 'template'] , function(faker , $ ,
 	Configurator.prototype.updateAPIs = function(index){
 		var row = new Row(index);
 		row.refreshSubTypes();
+	}
+
+	Configurator.prototype.loadProjects = function(){
+		var attrs = [],
+			that  = this,
+			projs = wak.getProjects();
+
+		_.each( projs , function(proj){
+			attrs.push({
+				label : proj.name,
+				value : proj.path
+			});
+		});
+
+		Template('options', {attributes : attrs}, function(html) {
+			$('#projects')
+			.html(html)
+			.trigger('change');
+	    });
+	}
+
+	Configurator.prototype.updateDataClasses = function(){
+		var attrs 	= [],
+			dcs 	= wak.getDataClasses($('#projects').val());
+
+		_.each( dcs , function(dc){
+			attrs.push({
+				label : dc.className,
+				value : dc.className
+			});
+		});
+
+		Template('options', {attributes : attrs}, function(html) {
+			$('#dataclasses')
+			.html(html);
+	    });
 	}
 
 	Configurator.prototype.getConfig = function(){

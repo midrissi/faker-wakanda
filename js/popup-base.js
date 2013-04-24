@@ -30,9 +30,10 @@ require.config({
 	]
 });
 
-define(['configurator' , 'wakanda'] , function(configurator){
+define(['configurator' , 'wakanda'] , function(configurator , wak){
 	var inst = configurator.getInstance();
 	window.inst = inst;
+
 	// Init events
 	$('#options tbody .removeBtn')
 	.live({
@@ -71,7 +72,9 @@ define(['configurator' , 'wakanda'] , function(configurator){
 	$('#navigator')
 	.click(function(e){
 		if($(this).hasClass('definitions')){
-			inst.loadView('home');
+			inst.loadView('home' , function(){
+				inst.loadProjects();
+			});
 			$('a span' , $(this)).html('Definitions');
 			inst.loadConfig();
 		}
@@ -104,6 +107,12 @@ define(['configurator' , 'wakanda'] , function(configurator){
 			
 			var res = JSON.stringify(inst.generateFakeData() , null , '\t');
 			
+
+			Template('run', {folder : $('#folderName').val() , file : 'data.json' , dataClass: $('#dataclasses').val()}, function(js) {
+				wak.saveText($('#projects').val() , 'data.json' , res);
+				wak.saveText($('#projects').val() , 'fill.js' , js , true);
+				studio.extension.quitDialog();
+	        });
 		}
 	});
 
@@ -111,6 +120,20 @@ define(['configurator' , 'wakanda'] , function(configurator){
 	.live({
 		click: function(){
 			inst.saveTags();
+		}
+	});
+
+	$('#cancel')
+	.live({
+		click: function(){
+			studio.extension.quitDialog();
+		}
+	});
+
+	$('#projects')
+	.live({
+		change : function(){
+			inst.updateDataClasses();
 		}
 	});
 

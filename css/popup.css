@@ -18,26 +18,46 @@ body{
 div.attributes{
     position: absolute;
     top: 65px;
-    bottom: 40px;
+    bottom: 65px;
     overflow-x: hidden;
     overflow-y: auto;
     right: 0px;
     left: 21px;
 }
+
+div.dc-config{
+    position:absolute;
+    bottom: 30px;
+    right: 5px;
+    left: 29px;
+}
+div.dc-config select{
+    width:142px;
+}
+
 div.footer{
     position:absolute;
     bottom: 5px;
-    right: 5px;
-    left: 5px;
+    right: 34px;
+    left: 27px;
 }
-div.footer #length,
+div.footer #runFile,
+div.footer #folderName,
+div.footer label[for=runFile],
+div.footer label[for=folderName],
 div.footer #generate{
     float: right;
 }
-
-div.footer button{
-    margin-top: 4px;
+div.footer #runFile{
+    margin-top: 6px;
 }
+div.footer label[for=runFile]{
+    margin-top: 3px;
+}
+div.footer select{
+    width: 100px;
+}
+
 ul#navigation {
     position: absolute;
     margin: 0px;
@@ -78,7 +98,8 @@ ul#navigation li a {
 ul#navigation li a:hover{
      background-color:#CAE3F2;
 }
-ul#navigation li a span{
+ul#navigation li a span,
+label{
 	letter-spacing: 1px;
 	font-size: 13px;
 	color: rgb(26, 81, 112);
