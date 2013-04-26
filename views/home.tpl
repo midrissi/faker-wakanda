@@ -21,7 +21,7 @@
   <button id='cancel'>Cancel</button>
   <button id='generate'>Generate</button>
   <input type='checkbox' id='removeDC' checked/>
-  <label for='removeDC'>Clear dataStore content</label>
+  <label for='removeDC'>Clear dataclass content</label>
   <input type='text' id='folderName' style="width: 59px;margin-right: 10px;margin-left: 6px;" value='_tmp' />
   <label for='folderName' style="margin-top:3px;">Folder</label>
 </div>
