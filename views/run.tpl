@@ -1,8 +1,12 @@
 {{#if remove}}ds.{{dataClass}}.remove();
 
-{{/if}}var content = loadText(getFolder('path') + '{{folder}}/{{file}}'),
+{{/if}}var content = loadText(getFolder('path') + '{{folder}}{{#if folder}}/{{/if}}{{file}}'),
 	list	= JSON.parse(content);
 
 for(var i = 0 , obj ; obj = list[i] ; i++){
-	new ds.{{dataClass}}(obj).save();
+	try{
+		new ds.{{dataClass}}(obj).save();
+	}catch(e){
+
+	}
 }

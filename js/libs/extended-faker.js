@@ -178,14 +178,6 @@ define(['faker'] , function(faker){
 					{
 						'value' : 'companyName',
 						'label'	: 'Name'
-					},
-					{
-						'value' : 'catchPhrase',
-						'label'	: 'Catchphrase'
-					},
-					{
-						'value' : 'bs',
-						'label'	: 'bs'
 					}
 				]
 			},
