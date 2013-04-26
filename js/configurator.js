@@ -210,9 +210,10 @@ define(['ext_faker' , 'jquery', 'wakanda' , 'underscore' , 'template'] , functio
 	    });
 	}
 
-	Configurator.prototype.updateDataClasses = function(){
+	Configurator.prototype.updateDataClasses = function(opts){
 		var attrs 	= [],
-			dcs 	= wak.getDataClasses($('#projects').val());
+			dcs 	= wak.getDataClasses($('#projects').val()),
+			that	= this;
 
 		_.each( dcs , function(dc){
 			attrs.push({
@@ -224,6 +225,10 @@ define(['ext_faker' , 'jquery', 'wakanda' , 'underscore' , 'template'] , functio
 		Template('options', {attributes : attrs}, function(html) {
 			$('#dataclasses')
 			.html(html);
+
+			if(opts && opts.onSuccess){
+				opts.onSuccess.call(that);
+			}
 	    });
 	}
 

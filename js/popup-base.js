@@ -135,7 +135,11 @@ define(['configurator'] , function(configurator){
 	$('#projects')
 	.live({
 		change : function(){
-			inst.updateDataClasses();
+			inst.updateDataClasses({
+				onSuccess: function(){
+					inst.reloadAttributes();
+				}
+			});
 		}
 	});
 
