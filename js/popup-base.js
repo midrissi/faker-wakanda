@@ -1,181 +1,183 @@
 require.config({
-	baseUrl: "./js",
-	optimize: "none",
-	packages: [
-		{
-			name: "jquery",
-			location: "./libs",
-			main: "jquery"
-		},
-		{
-			name: "handlebars",
-			location: "./libs",//"./libs/handlebars/dist",
-			main: "handlebars"
-		},
-		{
-			name: "underscore",
-			location: "./libs",//"./libs/underscore",
-			main: "underscore-min"
-		},
-		{
-			name: "faker",
-			location: "./libs",//"./libs/fakerjs",
-			main: "faker"
-		},
-		{
-			name: "ext_faker",
-			location: "./libs",//"./libs/fakerjs",
-			main: "extended-faker"
-		}
-	]
+    baseUrl: "./js",
+    optimize: "none",
+    packages: [{
+            name: "jquery",
+            location: "./libs",
+            main: "jquery"
+        }, {
+            name: "handlebars",
+            location: "./libs", //"./libs/handlebars/dist",
+            main: "handlebars"
+        }, {
+            name: "underscore",
+            location: "./libs", //"./libs/underscore",
+            main: "underscore-min"
+        }, {
+            name: "faker",
+            location: "./libs", //"./libs/fakerjs",
+            main: "faker"
+        }, {
+            name: "ext_faker",
+            location: "./libs", //"./libs/fakerjs",
+            main: "extended-faker"
+        }
+    ]
 });
 
-define(['configurator'] , function(configurator){
-	var inst = configurator.getInstance();
-	var wak  = inst.getWak();
+define(['configurator'], function (configurator) {
+    var inst = configurator.getInstance();
+    var wak = inst.getWak();
 
-	window.inst = inst;
+    window.inst = inst;
 
-	// Init events
-	$('#options tbody .removeBtn')
-	.live({
-		'click'	: function(){
-			inst.removeRow($($(this).parents().get(1)).index());
-		}
-	});
+    // Init events
+    $('#options tbody .removeBtn')
+        .live({
+        'click': function () {
+            inst.removeRow($($(this).parents().get(1)).index());
+        }
+    });
 
-	$('#options tbody .select-type')
-	.live({
-		'change'	: function(){
-			inst.updateAPIs($($(this).parents().get(1)).index() , $(this).val())
-		}
-	});
+    $('#options tbody .select-type')
+        .live({
+        'change': function () {
+            inst.updateAPIs($($(this).parents().get(1)).index(), $(this).val())
+        }
+    });
 
-	$('#add')
-	.click(function(e){
-		inst.addRow();
-	});
+    $('#add')
+        .click(function (e) {
+        inst.addRow();
+    });
 
-	$('#save')
-	.click(function(e){
-		inst.saveConfig();
-	});
+    $('#save')
+        .click(function (e) {
+        inst.saveConfig();
+    });
 
-	$('#load')
-	.click(function(e){
-		inst.loadConfig();
-	});
+    $('#load')
+        .click(function (e) {
+        inst.loadConfig();
+    });
 
-	$('#init')
-	.click(function(e){
-		inst.initConfig();
-	});
+    $('#init')
+        .click(function (e) {
+        inst.initConfig();
+    });
 
-	$('#navigator')
-	.click(function(e){
-		if($(this).hasClass('definitions')){
-			inst.loadView('home' , function(){
-				inst.loadProjects();
-			});
-			$('a span' , $(this)).html('Definitions');
-			inst.loadConfig();
-		}
-		else{
-			inst.saveConfig();
-			inst.loadView('definitions');
-			$('a span' , $(this)).html('Home');
-		}
+    $('#navigator')
+        .click(function (e) {
+        if ($(this).hasClass('definitions')) {
+            inst.loadView('home', function () {
+                inst.loadProjects();
+            });
+            $('a span', $(this)).html('Definitions');
+            inst.loadConfig();
+        } else {
+            inst.saveConfig();
+            inst.loadView('definitions');
+            $('a span', $(this)).html('Home');
+        }
 
-		$(this)
-		.add('#content')
-		.toggleClass('definitions');
-	});
+        $(this)
+            .add('#content')
+            .toggleClass('definitions');
+    });
 
-	$('#definition')
-	.live({
-		change: function(){
-			inst.refreshTags();
-		}
-	})
+    $('#definition')
+        .live({
+        change: function () {
+            inst.refreshTags();
+        }
+    })
 
-	$('#generate')
-	.live({
-		click: function(e){
-			switch(true){
-				case e.ctrlKey:
-				case e.metaKey:
-					inst.saveConfig();
-			}
-			
-			var res = JSON.stringify(inst.generateFakeData() , null , '\t');
-			
+    $('#generate')
+        .live({
+        click: function (e) {
+            switch (true) {
+            case e.ctrlKey:
+            case e.metaKey:
+                inst.saveConfig();
+            }
 
-			Template('run', {remove : $('#removeDC').prop('checked') , folder : $('#folderName').val() , file : 'data.json' , dataClass: $('#dataclasses').val()}, function(js) {
-				wak.saveText($('#projects').val() , 'data.json' , res);
-				wak.saveText($('#projects').val() , 'fill.js' , js , true);
-				studio.extension.quitDialog();
-	        });
-		}
-	});
+            var res = JSON.stringify(inst.generateFakeData(), null, '\t');
 
-	$('#saveDefs')
-	.live({
-		click: function(){
-			inst.saveTags();
-		}
-	});
 
-	$('#cancel')
-	.live({
-		click: function(){
-			studio.extension.quitDialog();
-		}
-	});
+            Template('run', {
+                remove: $('#removeDC').prop('checked'),
+                folder: $('#folderName').val(),
+                file: 'data.json',
+                dataClass: $('#dataclasses').val()
+            }, function (js) {
+                wak.saveText($('#projects').val(), 'data.json', res);
+                wak.saveText($('#projects').val(), 'fill.js', js, true);
+                studio.extension.quitDialog();
+            });
+        }
+    });
 
-	$('#projects')
-	.live({
-		change : function(){
-			inst.updateDataClasses({
-				onSuccess: function(){
-					inst.reloadAttributes();
-				}
-			});
-		}
-	});
+    $('#saveDefs')
+        .live({
+        click: function () {
+            inst.saveTags();
+        }
+    });
 
-	$('#dataclasses')
-	.live({
-		change : function(){
-			inst.reloadAttributes();
-		}
-	});
+    $('#cancel')
+        .live({
+        click: function () {
+            studio.extension.quitDialog();
+        }
+    });
 
-	function keycode(c){
-		return c.charCodeAt(0);
-	}
+    $('#projects')
+        .live({
+        change: function () {
+            inst.updateDataClasses({
+                onSuccess: function () {
+                    inst.reloadAttributes();
+                }
+            });
+        }
+    });
 
-	$(document)
-	.on({
-		'keydown' : function(e){
-			switch(true){
-				case e.altKey && e.ctrlKey && e.keyCode == keycode('S') :
-					inst.saveConfig();
-					break;
-				case e.altKey && e.ctrlKey && e.keyCode == keycode('N') :
-					inst.addRow();
-					break;
-				case e.ctrlKey:
-				case e.metaKey:
-					$('#generate').html('Generate & Save');
-					break;
-			}
-		},
-		'keyup'	: function(e){
-			switch(true){
-				case !e.ctrlKey && e.keyCode == 17:
-				case !e.metaKey && e.keyCode == 91:
-					$('#generate').html('Generate');
-			}
-		}
-	});
+    $('#dataclasses')
+        .live({
+        change: function () {
+            inst.reloadAttributes();
+        }
+    });
+
+    function keycode(c) {
+        return c.charCodeAt(0);
+    }
+
+    $(document)
+        .on({
+        'keydown': function (e) {
+            switch (true) {
+            case e.altKey && e.ctrlKey && e.keyCode == keycode('S'):
+                inst.saveConfig();
+                break;
+            case e.altKey && e.ctrlKey && e.keyCode == keycode('N'):
+                inst.addRow();
+                break;
+            case e.ctrlKey:
+            case e.metaKey:
+                $('#generate').html('Generate & Save');
+                break;
+            case e.keyCode == 27:
+                studio.extension.quitDialog();
+                break;
+            }
+        },
+        'keyup': function (e) {
+            switch (true) {
+            case !e.ctrlKey && e.keyCode == 17:
+            case !e.metaKey && e.keyCode == 91:
+                $('#generate').html('Generate');
+            }
+        }
+    });
 });
