@@ -396,15 +396,23 @@ define(['faker'] , function(faker){
     };
 
     faker.Name.findName = function () {
-        var r = faker.random.number(3);
+        var r = faker.random.number(2);
         switch (r) {
 	        case 0:
-	            return this.maleFullName();
+	            return {
+		        	value: this.maleFullName(),
+		        	meta: {
+		        		gender: 'male'
+		        	}
+		        };
 	        case 1:
-	            return this.femaleFullName();
+	            return {
+		        	value: this.femaleFullName(),
+		        	meta: {
+		        		gender: 'female'
+		        	}
+		        };
         }
-
-        return this.firstName() + " " + this.lastName();
     };
 
     faker.Internet.password = function () {
@@ -434,8 +442,13 @@ define(['faker'] , function(faker){
 	}
 
 	faker.Internet.email = function () {
-        var res = faker.Helpers.slugify(this.userName()) + "@" + faker.Helpers.slugify(this.domainName());
-        return res.toLowerCase();
+		var res = this.userName();
+
+		res = res.value?res.value:res;
+		res += "@" + faker.Helpers.slugify(this.domainName());
+		res = res.toLowerCase();
+
+        return res;
     };
 
 	faker.Internet.domainWord = function () {
@@ -444,6 +457,26 @@ define(['faker'] , function(faker){
 
     faker.Company.companyName = function (format) {
         return faker.random.company();
+    };
+
+    faker.random.first_name = function () {
+        var r = faker.random.number(2);
+        switch (r) {
+	        case 0:
+	            return {
+		        	value: this.array_element(faker.definitions.male_name),
+		        	meta: {
+		        		gender: 'male'
+		        	}
+		        };
+	        case 1:
+	            return {
+		        	value: this.array_element(faker.definitions.female_name),
+		        	meta: {
+		        		gender: 'female'
+		        	}
+		        };
+        }
     };
 
 	faker.random.female_name = function(){
